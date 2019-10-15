@@ -1,11 +1,11 @@
-package com.example.retrofitmvvmsample;
+package com.example.retrofitmvvmsample.modelClass;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class BaseModel {
+public class UsersBaseModel {
     @SerializedName("page")
     @Expose
     private Integer page;
