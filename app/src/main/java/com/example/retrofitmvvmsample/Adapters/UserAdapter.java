@@ -1,4 +1,4 @@
-package com.example.retrofitmvvmsample;
+package com.example.retrofitmvvmsample.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitmvvmsample.databinding.UsersListItemBinding;
 import com.example.retrofitmvvmsample.modelClass.Datum;
-import com.example.retrofitmvvmsample.utils.Utlity;
+import com.example.retrofitmvvmsample.utils.Utility;
 import com.example.retrofitmvvmsample.viewHolder.UsersViewHolder;
 
 import java.util.ArrayList;
@@ -49,10 +49,8 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void setUserViewHolder(UsersViewHolder userViewHolder, int position) {
         Datum user = mListItems.get(position);
         if (user != null) {
-            //TODO : move it to data, bind it inside viewholder
-            userViewHolder.getBinding().emailTv.setText(user.getEmail());
-            userViewHolder.getBinding().nameTv.setText(user.getFirstName() + "" + user.getLastName());
-            Utlity.loadImageUsingGlide(mContext,
+            userViewHolder.bind(user);
+            Utility.loadImageUsingGlide(mContext,
                     userViewHolder.getBinding().userImageIv,
                     user.getAvatar());
         }

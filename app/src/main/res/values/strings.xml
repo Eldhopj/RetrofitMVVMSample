@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RetrofitMVVMSample</string>
+    <string name="singleSpace">%1$s, %2$s</string>
+    <string name="userprofilepic">userProfilePic</string>
 </resources>

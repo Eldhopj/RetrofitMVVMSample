@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-public class Utlity {
+public class Utility {
     public static void loadImageUsingGlide(Context context, ImageView view, String url) {
         if (url != null && !url.isEmpty() && view != null && context != null) {
             Glide.with(context)
