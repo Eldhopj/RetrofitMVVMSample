@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         fetchData();
         swipeToRefresh();
+
     }
 
     private void swipeToRefresh() {

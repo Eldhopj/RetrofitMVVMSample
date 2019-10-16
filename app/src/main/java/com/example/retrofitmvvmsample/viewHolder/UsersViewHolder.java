@@ -19,5 +19,6 @@ public class UsersViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Datum user) {
         binding.setUserData(user);
+        binding.executePendingBindings();//is important in order to execute the data binding immediately. Otherwise it can populate incorrect view.
     }
 }
