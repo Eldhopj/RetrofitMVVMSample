@@ -5,19 +5,35 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.retrofitmvvmsample.databinding.ActivityMainBinding;
+import com.example.retrofitmvvmsample.modelClass.Datum;
 import com.example.retrofitmvvmsample.modelClass.UsersBaseModel;
+import com.example.retrofitmvvmsample.utils.Utlity;
 import com.example.retrofitmvvmsample.viewModel.UserViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private UserViewModel viewModel;
+    ActivityMainBinding binding;
+    private UserAdapter userAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        initRecyclerView();
         fetchUsersApi();
+    }
+
+    private void initRecyclerView() {
+        userAdapter = new UserAdapter(getApplicationContext());
+        Utlity.setVerticalRecyclerView(binding.recyclerView, userAdapter, getApplicationContext(), false);
     }
 
     private void fetchUsersApi() {
@@ -32,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void processUsersResponse(@NonNull UsersBaseModel response) {
-
+        List<Datum> userDatum = new ArrayList<>(response.getData());
+        userAdapter.addItemRange(userDatum);
     }
 }
