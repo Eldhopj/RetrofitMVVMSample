@@ -1,22 +1,15 @@
 package com.example.retrofitmvvmsample;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.retrofitmvvmsample.Adapters.UserAdapter;
 import com.example.retrofitmvvmsample.databinding.ActivityMainBinding;
-import com.example.retrofitmvvmsample.modelClass.Datum;
-import com.example.retrofitmvvmsample.modelClass.UsersBaseModel;
 import com.example.retrofitmvvmsample.utils.Utility;
 import com.example.retrofitmvvmsample.viewModel.UserViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private UserViewModel viewModel;
@@ -55,18 +48,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchUsersApi() {
-        viewModel.getUsersResponse(2).observe(this, apiResponse -> {
-            binding.swipeRefresh.setRefreshing(false);
-            if (apiResponse.getResponse() != null) {
-                processUsersResponse((UsersBaseModel) apiResponse.getResponse());
-            } else if (apiResponse.getError() != null) {
-                Toast.makeText(this, apiResponse.getError(), Toast.LENGTH_SHORT).show();
-            }
+        viewModel.getUsersResponse(1).observe(this, data -> {
+            userAdapter.addItemRange(data);
         });
     }
 
-    private void processUsersResponse(@NonNull UsersBaseModel response) {
-        List<Datum> userDatum = new ArrayList<>(response.getData());
-        userAdapter.addItemRange(userDatum);
-    }
+//    private void processUsersResponse(@NonNull UsersBaseModel response) {
+//        List<Datum> userDatum = new ArrayList<>(response.getData());
+//        userAdapter.addItemRange(userDatum);
+//    }
 }

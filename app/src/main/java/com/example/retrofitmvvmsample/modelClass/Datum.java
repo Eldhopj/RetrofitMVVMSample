@@ -1,10 +1,19 @@
 package com.example.retrofitmvvmsample.modelClass;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "data_table") //name of the table
 public class Datum {
 
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -20,6 +29,8 @@ public class Datum {
     @SerializedName("avatar")
     @Expose
     private String avatar;
+
+    private int pageNumber;
 
     public Integer getId() {
         return id;

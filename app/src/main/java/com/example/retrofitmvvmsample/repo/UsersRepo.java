@@ -18,9 +18,11 @@ public class UsersRepo {
     private static final String TAG = "UsersRepo";
     private static UsersRepo repoInstance;
     private final Application application;
+    private final UserLocalRepo userLocalRepo;
 
     private UsersRepo(Application application) {
         this.application = application;
+        userLocalRepo = UserLocalRepo.getInstance(application);
     }
 
     public static UsersRepo getInstance(Application application) {
@@ -43,7 +45,7 @@ public class UsersRepo {
                     mutableLiveData.setValue(new ApiResponse(response.message()));
                     return;
                 }
-                mutableLiveData.setValue(new ApiResponse(response.body()));
+                userLocalRepo.insert(response.body().getData(), page);
             }
 
             @Override
