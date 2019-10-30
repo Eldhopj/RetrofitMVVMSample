@@ -1,4 +1,4 @@
-package com.example.retrofitmvvmsample;
+package com.example.retrofitmvvmsample.interfaces;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -14,6 +14,10 @@ public interface DatumDao {
 
     @Insert
     void insert(List<Datum> data);
+
+    @Query("DELETE FROM data_table")
+        // Delete all values from table
+    void deleteAllData();
 
     @Query("SELECT * FROM data_table")
     LiveData<List<Datum>> getAllData();// Observe the object , so if there is any changes in the table this value will be auto updated and the activity will be notified

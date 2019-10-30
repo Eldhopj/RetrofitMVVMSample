@@ -5,9 +5,9 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.retrofitmvvmsample.DatumDao;
-import com.example.retrofitmvvmsample.RoomClient;
+import com.example.retrofitmvvmsample.interfaces.DatumDao;
 import com.example.retrofitmvvmsample.modelClass.Datum;
+import com.example.retrofitmvvmsample.utils.RoomClient;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class UserLocalRepo {
 
     //--------------- inserting --------------------- //
 
-    public void insert(List<Datum> data) {
+    void insert(List<Datum> data) {
         new insertAsyncTask(mDatumDao).execute(data);
     }
 

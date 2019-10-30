@@ -1,4 +1,4 @@
-package com.example.retrofitmvvmsample;
+package com.example.retrofitmvvmsample.interfaces;
 
 import com.example.retrofitmvvmsample.modelClass.UsersBaseModel;
 

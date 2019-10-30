@@ -2,7 +2,7 @@ package com.example.retrofitmvvmsample.utils;
 
 import android.content.Context;
 
-import com.example.retrofitmvvmsample.Users;
+import com.example.retrofitmvvmsample.interfaces.Users;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

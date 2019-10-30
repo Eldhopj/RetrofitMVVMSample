@@ -14,20 +14,20 @@ import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class UsersRepo {
-    private static final String TAG = "UsersRepo";
-    private static UsersRepo repoInstance;
+public class UsersNetworkRepo {
+    private static final String TAG = "UsersNetworkRepo";
+    private static UsersNetworkRepo repoInstance;
     private final Application application;
     private final UserLocalRepo userLocalRepo;
 
-    private UsersRepo(Application application) {
+    private UsersNetworkRepo(Application application) {
         this.application = application;
         userLocalRepo = UserLocalRepo.getInstance(application);
     }
 
-    public static UsersRepo getInstance(Application application) {
+    public static UsersNetworkRepo getInstance(Application application) {
         if (repoInstance == null) {
-            repoInstance = new UsersRepo(application);
+            repoInstance = new UsersNetworkRepo(application);
         }
         return repoInstance;
     }
@@ -45,7 +45,7 @@ public class UsersRepo {
                     mutableLiveData.setValue(new ApiResponse(response.message()));
                     return;
                 }
-                userLocalRepo.insert(response.body().getData(), page);
+                userLocalRepo.insert(response.body().getData());
             }
 
             @Override
