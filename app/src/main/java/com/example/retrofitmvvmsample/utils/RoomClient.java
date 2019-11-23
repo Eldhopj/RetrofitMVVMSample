@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.retrofitmvvmsample.interfaces.DatumDao;
 import com.example.retrofitmvvmsample.modelClass.Datum;
 
-@Database(entities = {Datum.class}, version = 1)
+@Database(entities = {Datum.class}, version = 1, exportSchema = false)
 public abstract class RoomClient extends RoomDatabase {
 
     private static volatile RoomClient INSTANCE;

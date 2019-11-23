@@ -26,4 +26,8 @@ public class UserViewModel extends AndroidViewModel {
         usersNetworkRepo.getMatches(page);
         return userLocalRepo.getUsers();
     }
+
+    public void deleteData() {
+        userLocalRepo.delete();
+    }
 }

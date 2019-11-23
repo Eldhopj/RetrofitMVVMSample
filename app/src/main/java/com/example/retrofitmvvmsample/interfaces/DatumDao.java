@@ -3,6 +3,7 @@ package com.example.retrofitmvvmsample.interfaces;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.retrofitmvvmsample.modelClass.Datum;
@@ -12,7 +13,7 @@ import java.util.List;
 @Dao // Give Data Access Object annotation
 public interface DatumDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Datum> data);
 
     @Query("DELETE FROM data_table")

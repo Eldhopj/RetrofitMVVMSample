@@ -30,8 +30,6 @@ public class Datum {
     @Expose
     private String avatar;
 
-    private int pageNumber;
-
     public Integer getId() {
         return id;
     }

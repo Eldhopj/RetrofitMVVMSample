@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.retrofitmvvmsample.Adapters.UserAdapter;
 import com.example.retrofitmvvmsample.databinding.ActivityMainBinding;
-import com.example.retrofitmvvmsample.utils.RoomClient;
 import com.example.retrofitmvvmsample.utils.Utility;
 import com.example.retrofitmvvmsample.viewModel.UserViewModel;
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void swipeToRefresh() {
-        RoomClient.getDatabase(getApplicationContext()).datumDao().deleteAllData();
+        viewModel.deleteData();
         binding.swipeRefresh.setOnRefreshListener(this::refreshData);
     }
 
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchUsersApi() {
         viewModel.getUsersResponse(1).observe(this, data -> {
             binding.swipeRefresh.setRefreshing(false);
+            userAdapter.clearData();
             userAdapter.addItemRange(data);
         });
     }

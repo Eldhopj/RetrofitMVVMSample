@@ -35,10 +35,14 @@ public class UserLocalRepo {
         return mDatumDao.getAllData();
     }
 
-    //--------------- inserting --------------------- //
+    //--------------- Manupulating --------------------- //
 
     void insert(List<Datum> data) {
         new insertAsyncTask(mDatumDao).execute(data);
+    }
+
+    public void delete() {
+        new deleteAsyncTask(mDatumDao).execute();
     }
 
     private static class insertAsyncTask extends AsyncTask<List<Datum>, Void, Void> {
@@ -53,6 +57,20 @@ public class UserLocalRepo {
         @Override
         protected final Void doInBackground(final List<Datum>... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Void, Void, Void> {
+        private DatumDao mAsyncTaskDao;
+
+        public deleteAsyncTask(DatumDao mAsyncTaskDao) {
+            this.mAsyncTaskDao = mAsyncTaskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAllData();
             return null;
         }
     }
