@@ -2,7 +2,7 @@ package com.example.retrofitmvvmsample.utils;
 
 import android.content.Context;
 
-import com.example.retrofitmvvmsample.Users;
+import com.example.retrofitmvvmsample.apiInterface.Users;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;

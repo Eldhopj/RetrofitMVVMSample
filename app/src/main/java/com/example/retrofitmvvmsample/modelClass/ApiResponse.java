@@ -19,15 +19,8 @@ public class ApiResponse {
         return response;
     }
 
-    public void setResponse(Object response) {
-        this.response = response;
-    }
 
     public String getError() {
         return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
     }
 }

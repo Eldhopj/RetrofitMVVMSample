@@ -22,7 +22,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context mContext;
 
     //constructor
-    public UserAdapter(Context context) { // constructor
+    public UserAdapter(Context context) {
         this.mContext = context;
     }
 
