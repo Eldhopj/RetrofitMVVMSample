@@ -38,9 +38,14 @@ public class RetrofitClient {
         httpClient.addInterceptor(offlineInterceptor(context));
         httpClient.addNetworkInterceptor(networkInterceptor()); // only used when network is on
 
-        /**If there are any headers its adds in here*/
+//        /**If there are any headers its adds in here*/
 //        httpClient.addInterceptor(chain -> {
 //            Request original = chain.request();
+//            //Ignoring endpoints which need not needed tokens
+//            if (original.url().encodedPath().equalsIgnoreCase("/oauth/token")
+//                    || (original.url().encodedPath().equalsIgnoreCase("/api/v1/login") && original.method().equalsIgnoreCase("post"))) {
+//                return  chain.proceed(original);
+//            }
 //            Request.Builder requestBuilder = original.newBuilder()
 //                    .header("Authorization", Utility.getRetrofitHeader()) // Headers
 //                    .header(Constants.X_HEADER, Utility.getSecureUniqueHardwareID());
