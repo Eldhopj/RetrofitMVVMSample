@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide
 
 object Utility {
 
-    fun loadImageUsingGlide(context: Context?, view: ImageView?, url: String?) {
-        if (url != null && !url.isEmpty() && view != null && context != null) {
+    fun loadImageUsingGlide(context: Context?, view: ImageView, url: String?) {
+        if (!url.isNullOrEmpty() && context != null) {
             Glide.with(context)
                 .load(url)
                 .centerCrop()
@@ -20,7 +20,12 @@ object Utility {
         }
     }
 
-    fun setVerticalRecyclerView(recyclerView: RecyclerView?, adapter: RecyclerView.Adapter<*>?, context: Context?, nestedScroll: Boolean) {
+    fun setVerticalRecyclerView(
+        recyclerView: RecyclerView?,
+        adapter: RecyclerView.Adapter<*>?,
+        context: Context?,
+        nestedScroll: Boolean
+    ) {
         if (recyclerView != null && context != null) {
             recyclerView.setHasFixedSize(false)
             recyclerView.layoutManager = LinearLayoutManager(context)

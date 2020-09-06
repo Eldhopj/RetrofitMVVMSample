@@ -19,20 +19,17 @@ private const val cacheSize = 5 * 1024 * 1024.toLong() // 5 MB
 
 class RetrofitClient private constructor(context: Context) {
 
-    private lateinit var retrofit: Retrofit
-
     val users: Users by lazy { retrofit.create(Users::class.java) }
 
     companion object {
 
-        private var mInstance: RetrofitClient? = null
+        @Volatile
+        private var INSTANCE: RetrofitClient? = null
 
-        fun getInstance(context: Context): RetrofitClient {
-            if (mInstance == null) {
-                mInstance = RetrofitClient(context)
+        fun getInstance(context: Context): RetrofitClient =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: RetrofitClient(context).also { INSTANCE = it }
             }
-            return mInstance as RetrofitClient
-        }
     }
 
     private fun okHttpClient(context: Context): OkHttpClient {
@@ -119,11 +116,12 @@ class RetrofitClient private constructor(context: Context) {
         }
     }
 
-    init {
-        retrofit = Retrofit.Builder()
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient(context))
             .build()
     }
+
 }
