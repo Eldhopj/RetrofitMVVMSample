@@ -11,7 +11,7 @@ import com.example.retrofitmvvmsample.databinding.ActivityMainBinding
 import com.example.retrofitmvvmsample.modelClass.ApiResponse
 import com.example.retrofitmvvmsample.modelClass.Datum
 import com.example.retrofitmvvmsample.modelClass.UsersBaseModel
-import com.example.retrofitmvvmsample.repo.UsersRepo
+import com.example.retrofitmvvmsample.utils.RetrofitClient
 import com.example.retrofitmvvmsample.utils.Utility.setVerticalRecyclerView
 import com.example.retrofitmvvmsample.viewModel.UserViewModel
 import com.example.retrofitmvvmsample.viewModel.UserViewModelProviderFactory
@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val usersRepo = UsersRepo.getInstance(this)
-        val viewModelProviderFactory = UserViewModelProviderFactory(application, usersRepo!!)
+        val retrofitClient = RetrofitClient.getInstance(applicationContext)
+        val viewModelProviderFactory = UserViewModelProviderFactory(application, retrofitClient)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(UserViewModel::class.java)
         initRecyclerView()
         fetchData()
@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        userAdapter = UserAdapter(applicationContext)
-        setVerticalRecyclerView(binding.recyclerView, userAdapter, applicationContext, false)
+        userAdapter = UserAdapter(this)
+        setVerticalRecyclerView(binding.recyclerView, userAdapter, this, false)
     }
 
     private fun refreshData() {

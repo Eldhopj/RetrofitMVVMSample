@@ -1,6 +1,5 @@
 package com.example.retrofitmvvmsample.repo
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.retrofitmvvmsample.modelClass.ApiResponse
@@ -9,7 +8,7 @@ import com.example.retrofitmvvmsample.utils.RetrofitClient
 
 private const val TAG = "UsersRepo"
 
-class UsersRepo private constructor(private val context: Context) {
+class UsersRepo private constructor(private val retrofitClient: RetrofitClient) {
 
 
     suspend fun getUsers(page: Int): MutableLiveData<ApiResponse<UsersBaseModel>> {
@@ -17,7 +16,7 @@ class UsersRepo private constructor(private val context: Context) {
 
         mutableLiveData.postValue(ApiResponse.Loading())
         try {
-            val response = RetrofitClient.getInstance(context).users.getUsers(page)
+            val response = retrofitClient.users.getUsers(page)
             if (response.isSuccessful) {
                 response.body().let {
                     mutableLiveData.postValue(ApiResponse.Success(it!!))
@@ -36,9 +35,9 @@ class UsersRepo private constructor(private val context: Context) {
 
     companion object {
         private var repoInstance: UsersRepo? = null
-        fun getInstance(context: Context): UsersRepo? {
+        fun getInstance(retrofitClient: RetrofitClient): UsersRepo? {
             if (repoInstance == null) {
-                repoInstance = UsersRepo(context)
+                repoInstance = UsersRepo(retrofitClient)
             }
             return repoInstance
         }
