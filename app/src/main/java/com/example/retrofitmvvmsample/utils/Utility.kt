@@ -11,12 +11,12 @@ import com.bumptech.glide.Glide
 
 object Utility {
 
-    fun loadImageUsingGlide(context: Context?, view: ImageView, url: String?) {
-        if (!url.isNullOrEmpty() && context != null) {
-            Glide.with(context)
+    fun ImageView.loadImage(url: String?) {
+        if (!url.isNullOrEmpty()) {
+            Glide.with(this)
                 .load(url)
                 .centerCrop()
-                .into(view)
+                .into(this)
         }
     }
 
@@ -34,8 +34,8 @@ object Utility {
         }
     }
 
-    fun hasNetwork(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(
+    fun Context.hasInternet(): Boolean {
+        val connectivityManager = this.getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

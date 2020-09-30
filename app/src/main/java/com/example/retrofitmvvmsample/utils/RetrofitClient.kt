@@ -3,6 +3,7 @@ package com.example.retrofitmvvmsample.utils
 import android.content.Context
 import com.example.retrofitmvvmsample.BuildConfig
 import com.example.retrofitmvvmsample.apiInterface.Users
+import com.example.retrofitmvvmsample.utils.Utility.hasInternet
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -101,7 +102,7 @@ class RetrofitClient private constructor(context: Context) {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain): Response {
                 var request = chain.request()
-                if (!Utility.hasNetwork(context)) { // makes the network is not available only
+                if (context.hasInternet()) { // makes the network is not available only
                     val cacheControl = CacheControl.Builder()
                         .maxStale(5, TimeUnit.DAYS)
                         .build()

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.retrofitmvvmsample.databinding.UsersListItemBinding
 import com.example.retrofitmvvmsample.modelClass.Datum
-import com.example.retrofitmvvmsample.utils.Utility
+import com.example.retrofitmvvmsample.utils.Utility.loadImage
 
 class UsersViewHolder(val binding: UsersListItemBinding, private val context: Context) : ViewHolder(binding.root) {
 
@@ -18,9 +18,7 @@ class UsersViewHolder(val binding: UsersListItemBinding, private val context: Co
         with(item) {
             binding.userData = this
             binding.executePendingBindings() //is important in order to execute the data binding immediately. Otherwise it can populate incorrect view.
-            Utility.loadImageUsingGlide(context,
-                binding.userImageIv,
-                avatar)
+            binding.userImageIv.loadImage(avatar)
         }
     }
 }

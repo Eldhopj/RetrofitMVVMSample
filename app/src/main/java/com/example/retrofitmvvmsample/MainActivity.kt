@@ -8,13 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.retrofitmvvmsample.adapters.UserAdapter
 import com.example.retrofitmvvmsample.databinding.ActivityMainBinding
-import com.example.retrofitmvvmsample.modelClass.ApiResponse
 import com.example.retrofitmvvmsample.modelClass.Datum
+import com.example.retrofitmvvmsample.modelClass.State
 import com.example.retrofitmvvmsample.modelClass.UsersBaseModel
-import com.example.retrofitmvvmsample.utils.RetrofitClient
 import com.example.retrofitmvvmsample.utils.Utility.setVerticalRecyclerView
 import com.example.retrofitmvvmsample.viewModel.UserViewModel
-import com.example.retrofitmvvmsample.viewModel.UserViewModelProviderFactory
+import com.example.retrofitmvvmsample.viewModel.ViewModelProviderFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -29,11 +28,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val retrofitClient = RetrofitClient.getInstance(applicationContext)
-        val viewModelProviderFactory = UserViewModelProviderFactory(application, retrofitClient)
+        val viewModelProviderFactory = ViewModelProviderFactory(application)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(UserViewModel::class.java)
         initRecyclerView()
-        fetchData()
+        fetchUsersApi()
         swipeToRefresh()
     }
 
@@ -47,28 +45,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshData() {
-        fetchData()
-    }
-
-    private fun fetchData() {
         fetchUsersApi()
     }
+
 
     private fun fetchUsersApi() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.getUsersResponse(2).observe(this@MainActivity) { apiResponse ->
                 when (apiResponse) {
-                    is ApiResponse.Success -> {
+                    is State.Success -> {
                         binding.swipeRefresh.isRefreshing = false
-                        apiResponse.data?.let { processUsersResponse(it) }
+                        processUsersResponse(apiResponse.data)
                     }
-                    is ApiResponse.Error -> {
+                    is State.Error -> {
                         binding.swipeRefresh.isRefreshing = false
-                        apiResponse.message?.let { message ->
-                            Toast.makeText(this@MainActivity, "An error occured: $message", Toast.LENGTH_LONG).show()
+                        apiResponse.errorMessage?.let { message ->
+                            Toast.makeText(
+                                this@MainActivity,
+                                "An error occured: $message",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
-                    is ApiResponse.Loading -> {
+                    is State.Loading -> {
                         binding.swipeRefresh.isRefreshing = true
                     }
                 }

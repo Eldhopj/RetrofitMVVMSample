@@ -1,8 +1,9 @@
 package com.example.retrofitmvvmsample.repo
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.example.retrofitmvvmsample.modelClass.ApiResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import com.example.retrofitmvvmsample.modelClass.State
 import com.example.retrofitmvvmsample.modelClass.UsersBaseModel
 import com.example.retrofitmvvmsample.utils.RetrofitClient
 
@@ -10,27 +11,19 @@ private const val TAG = "UsersRepo"
 
 class UsersRepo private constructor(private val retrofitClient: RetrofitClient) {
 
-
-    suspend fun getUsers(page: Int): MutableLiveData<ApiResponse<UsersBaseModel>> {
-        val mutableLiveData = MutableLiveData<ApiResponse<UsersBaseModel>>()
-
-        mutableLiveData.postValue(ApiResponse.Loading())
+    fun getUsers(page: Int): LiveData<State<UsersBaseModel>> = liveData {
+        emit(State.Loading)
         try {
             val response = retrofitClient.users.getUsers(page)
             if (response.isSuccessful) {
-                response.body().let {
-                    mutableLiveData.postValue(ApiResponse.Success(it!!))
-                }
+                emit(State.Success(response.body()!!))
             } else {
                 Log.e(TAG, "onResponse: " + "ErrorCode : " + response.code())
-                mutableLiveData.postValue(ApiResponse.Error(response.message()))
+                emit(State.Error(response.message()))
             }
         } catch (t: Throwable) {
-            t.localizedMessage.let {
-                mutableLiveData.postValue(ApiResponse.Error(it!!))
-            }
+            emit(State.Error(t.localizedMessage!!))
         }
-        return mutableLiveData
     }
 
     companion object {
